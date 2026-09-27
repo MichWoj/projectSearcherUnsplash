@@ -28,9 +28,9 @@ export function searchUsers(query) {
     .then((rsp) => rsp.json());
 }
 
-export function getUserPictures(userId) {
+export function getUserPictures(username) {
     let queryString = `?client_id=${settings.clientId}`;
-    return fetch(`${settings.baseApiUrl}/users/username${userId}/portfolio${queryString}`)
+    return fetch(`${settings.baseApiUrl}users/${username}/photos${queryString}`)
     .then((rsp) => rsp.json());
    }
 
