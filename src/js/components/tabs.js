@@ -40,32 +40,7 @@ export function initializeTabs(elm, tabFuncs) {
     export function initializeCollectionsTab() {
     const searchInput = document.querySelector('#collections-tab input');
     const autocompleteResults = document.querySelector('#collections-tab .autocomplete__results');
-    const modal = createElement('div', { class: 'collection-modal hide' });
-    const modalContent = createElement('div', { class: 'collection-modal__content' });
-    const modalTitle = createElement('h2', { class: 'collection-modal__title' });
-    const closeButton = createElement('button', {
-    class: 'collection-modal__close',
-    type: 'button',
-    'aria-label': 'Zamknij kolekcję'
-    });
-    closeButton.innerText = 'X';
-    const modalPhotos = createElement('div', { class: 'collection-modal__photos' });
-
-    modalContent.appendChild(modalTitle);
-    modalContent.appendChild(closeButton);
-    modalContent.appendChild(modalPhotos);
-    modal.appendChild(modalContent);
-    document.body.appendChild(modal);
-
-    closeButton.addEventListener('click', () => {
-    modal.classList.add('hide');
-    });
-
-    modal.addEventListener('click', (event) => {
-    if (event.target === modal) {
-    modal.classList.add('hide');
-    }
-    });
+    const results = document.querySelector('#collections-tab .photos-tab__results');
 
     let debounceTimeout; 
 
@@ -89,7 +64,7 @@ export function initializeTabs(elm, tabFuncs) {
             for (const collection of collections.results) {
             const rowDiv = createRow(collection);
             rowDiv.addEventListener('click', () => {
-            handleAutocompleteSelect(collection.id, collection.title);
+            handleAutocompleteSelect(collection.id);
             });
             autocompleteResults.appendChild(rowDiv);
             }
@@ -99,20 +74,10 @@ export function initializeTabs(elm, tabFuncs) {
             });
 
             
-            function handleAutocompleteSelect(collectionId, collectionTitle) {
+            function handleAutocompleteSelect(collectionId) {
             getCollectionPictures(collectionId)
             .then((pictures) => {
-            modalTitle.innerText = collectionTitle;
-            modalPhotos.innerHTML = '';
-            for (const picture of pictures) {
-            const modalImg = createElement('img', {
-            src: picture.urls.regular || picture.urls.full,
-            alt: picture.alt_description || 'Zdjęcie z kolekcji'
-            });
-            modalPhotos.appendChild(modalImg);
-            }
-            modal.classList.remove('hide');
-            autocompleteResults.classList.add('hide');
+            console.log(pictures);
             });
             }
             function createRow(colection) {
@@ -138,32 +103,7 @@ export function initializeTabs(elm, tabFuncs) {
 export function initializeUserTab() {
     const searchInput = document.querySelector('#user-tab input');
     const autocompleteResults = document.querySelector('#user-tab .autocomplete__results');
-    const modal = createElement('div', { class: 'collection-modal hide' });
-    const modalContent = createElement('div', { class: 'collection-modal__content' });
-    const modalTitle = createElement('h2', { class: 'collection-modal__title' });
-    const closeButton = createElement('button', {
-    class: 'collection-modal__close',
-    type: 'button',
-    'aria-label': 'Zamknij zdjęcia użytkownika'
-    });
-    closeButton.innerText = 'X';
-    const modalPhotos = createElement('div', { class: 'collection-modal__photos' });
-
-    modalContent.appendChild(modalTitle);
-    modalContent.appendChild(closeButton);
-    modalContent.appendChild(modalPhotos);
-    modal.appendChild(modalContent);
-    document.body.appendChild(modal);
-
-    closeButton.addEventListener('click', () => {
-    modal.classList.add('hide');
-    });
-
-    modal.addEventListener('click', (event) => {
-    if (event.target === modal) {
-    modal.classList.add('hide');
-    }
-    });
+    const results = document.querySelector('#user-tab .photos-tab__results');
 
     let debounceTimeout1; 
 
@@ -191,7 +131,7 @@ export function initializeUserTab() {
             const rowDiv =createRow(user);
 
             rowDiv.addEventListener('click', () => {
-            handleAutocompleteSelect(user.username, user.name);
+            handleAutocompleteSelect(user.id);
             });
 
             autocompleteResults.appendChild(rowDiv);
@@ -202,22 +142,10 @@ export function initializeUserTab() {
             });
       
 
-            function handleAutocompleteSelect(username, userName) {
-            getUserPictures(username)
-            .then((pictures) => {
-            modalTitle.innerText = `Zdjęcia użytkownika: ${userName}`;
-            modalPhotos.innerHTML = '';
-
-            for (const picture of pictures) {
-            const modalImg = createElement('img', {
-            src: picture.urls.regular || picture.urls.full,
-            alt: picture.alt_description || 'Zdjęcie użytkownika'
-            });
-            modalPhotos.appendChild(modalImg);
-            }
-
-            modal.classList.remove('hide');
-            autocompleteResults.classList.add('hide');
+            function handleAutocompleteSelect(userId) {
+            getCollectionPictures(userId)
+            .then((pictures1) => {
+            console.log(pictures1);
             });
             }
 
@@ -230,7 +158,6 @@ export function initializeUserTab() {
             const titleSpan = createElement('span', {
             id: 'span1',
             class: 'autocomplete__result-title',
-            //onClick : openProperties()
             });
             titleSpan.innerText = user.name;
 
@@ -239,6 +166,7 @@ export function initializeUserTab() {
             const img = createElement('img',{
             id:'img',
             class: 'autocomplete__result-thumb',
+            onClick : 'openProperties1()',
             src: user.profile_image.medium
             });
         
@@ -283,4 +211,13 @@ export function initializeUserTab() {
             return rowDiv;
 
         }
-    }
+
+ 
+        const element = document.querySelector('#span');
+        element.onclick = klikme;
+        element.onmouseover = function() {
+            console.log('Najechano przycisk!');
+        }
+
+    };
+    
