@@ -239,7 +239,9 @@ export function initializeUserTab() {
             const img = createElement('img',{
             id:'img',
             class: 'autocomplete__result-thumb',
-            src: user.profile_image.medium
+            src: user.profile_image.large,
+            alt: "opis",
+            title: "ILOŚĆ ZDJĘĆ: " + user.total_photos + "\n" + "LICZBA LIKÓW: " + user.total_likes
             });
         
             const prop1 = createElement('prop1',{
