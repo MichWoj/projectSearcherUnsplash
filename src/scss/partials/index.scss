@@ -157,6 +157,14 @@ box {
 
 }
 
+.autocomplete__result-thumb {
+  display: block;
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+}
+
+
 img{
   border-radius: 25px; 
   width: auto;                
